@@ -46,7 +46,12 @@ os.environ.setdefault("NO_PROXY", _NO_PROXY)
 os.environ.setdefault("no_proxy", _NO_PROXY)
 
 import nest_asyncio
-nest_asyncio.apply()
+try:
+    nest_asyncio.apply()
+except (ValueError, RuntimeError):
+    # nest_asyncio cannot patch uvloop (used by uvicorn[standard] in production).
+    # That's fine — uvloop doesn't need the patch; skip silently.
+    pass
 
 from dotenv import load_dotenv
 load_dotenv()
