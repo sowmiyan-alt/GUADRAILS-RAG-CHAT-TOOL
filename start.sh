@@ -26,8 +26,9 @@ python -c "import uvicorn" 2>/dev/null || {
     pip install -r backend/requirements.txt
 }
 
-echo "[INFO] Starting FastAPI server on http://localhost:8000"
+PORT=${PORT:-8000}
+echo "[INFO] Starting FastAPI server on http://localhost:$PORT"
 echo "[INFO] Press Ctrl+C to stop."
 echo ""
 
-uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
+exec uvicorn backend.main:app --host 0.0.0.0 --port $PORT
