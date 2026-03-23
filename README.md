@@ -2,25 +2,25 @@
 
 <br/>
 
-<img src="https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge&logo=fastapi&logoColor=white"/>
-&nbsp;
 <img src="https://img.shields.io/badge/LangChain-RAG-311b92?style=for-the-badge&logo=chainlink&logoColor=white"/>
 &nbsp;
 <img src="https://img.shields.io/badge/Ollama-Local%20LLM-black?style=for-the-badge&logo=ollama&logoColor=white"/>
 &nbsp;
 <img src="https://img.shields.io/badge/FAISS-Vector%20Store-0064A4?style=for-the-badge&logo=meta&logoColor=white"/>
+&nbsp;
+<img src="https://img.shields.io/badge/CLI-Command%20Line-000000?style=for-the-badge&logo=terminal&logoColor=white"/>
 
 <br/><br/>
 
-# GUARDRAILS LOCAL RAG BOT
+# GuragChat
 
 ### A privacy-first, fully offline AI document assistant — secured by a tiered safety guardrails system
 
 <br/>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-22c55e?style=flat-square)](LICENSE)
-[![Python](https://img.shields.io/badge/Python-3.11%2B-3b82f6?style=flat-square&logo=python&logoColor=white)](https://python.org)
-[![FastAPI](https://img.shields.io/badge/API-FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![Python](https://img.shields.io/badge/Python-3.9%2B-3b82f6?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![PyPI](https://img.shields.io/pypi/v/guragchat?style=flat-square)](https://pypi.org/project/guragchat/)
 [![Offline](https://img.shields.io/badge/Mode-100%25%20Offline-76b900?style=flat-square)](#)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-a78bfa?style=flat-square)](#contributing)
 
@@ -37,18 +37,18 @@
 
 ## Architecture
 
-![System Architecture](assets/architecture.svg)
+The GuragChat package provides a command-line interface for building and querying RAG (Retrieval-Augmented Generation) chatbots with local LLMs.
 
 ---
 
-## Why This Project?
+## Why GuragChat?
 
-Most RAG chatbots rely on cloud APIs, which creates **privacy risks** for sensitive documents — contracts, medical records, internal reports. This project solves that by:
+Most RAG chatbots rely on cloud APIs, which creates **privacy risks** for sensitive documents — contracts, medical records, internal reports. GuragChat solves that by:
 
 - Running the **LLM locally** via Ollama (no data transmitted)
 - Embedding documents **offline** using HuggingFace sentence-transformers
 - Enforcing **tiered safety policies** with 4 sensitivity levels
-- Serving everything through a **single FastAPI server** with a VanillaJS frontend
+- Providing a **simple CLI interface** for easy usage
 
 ---
 
@@ -64,6 +64,7 @@ Most RAG chatbots rely on cloud APIs, which creates **privacy risks** for sensit
 - **Persistent FAISS cache** — same file re-uploads skip re-embedding
 - **Multi-turn conversation** — full history-aware retrieval
 - **Any Ollama model** — Gemma, Llama3, Mistral, Phi, and more
+- **CLI Interface** — easy command-line usage
 
 </td>
 <td width="50%">
@@ -96,8 +97,7 @@ Most RAG chatbots rely on cloud APIs, which creates **privacy risks** for sensit
 
 | Layer | Technology |
 |---|---|
-| **Web UI** | Vanilla JS + HTML/CSS (served by FastAPI) |
-| **API Server** | [FastAPI](https://fastapi.tiangolo.com) + Uvicorn |
+| **CLI Interface** | Python argparse + rich console output |
 | **LLM Engine** | [Ollama](https://ollama.com) — local model inference |
 | **Embeddings** | [HuggingFace](https://huggingface.co) `sentence-transformers/all-MiniLM-L6-v2` |
 | **Vector Store** | [FAISS](https://github.com/facebookresearch/faiss) — disk-persisted |
@@ -108,7 +108,7 @@ Most RAG chatbots rely on cloud APIs, which creates **privacy risks** for sensit
 
 ## Prerequisites
 
-- **Python 3.11+**
+- **Python 3.9+**
 - **[Ollama](https://ollama.com)** installed and running locally
 - At least one model pulled via Ollama:
 
@@ -119,35 +119,42 @@ ollama pull gemma3:1b
 
 ---
 
+## Installation
+
+Install GuragChat from PyPI:
+
+```bash
+pip install guragchat
+```
+
+Or install from source:
+
+```bash
+git clone https://github.com/sowmiyan-alt/GUADRAILS-RAG-CHAT-TOOL.git
+cd GUADRAILS-RAG-CHAT-TOOL
+pip install .
+```
+
+---
+
 ## Quick Start
 
-### Option 1 — Local (Windows)
-
-```bat
-start.bat
-```
-
-### Option 2 — Local (macOS / Linux)
+After installation, run the CLI:
 
 ```bash
-chmod +x start.sh
-./start.sh
+guragchat --pdf path/to/your/document.pdf
 ```
 
-Open **[http://localhost:8000](http://localhost:8000)** in your browser.
+This will start an interactive chat session with your document.
 
-### Option 3 — Manual setup
+### Options
 
-```bash
-# 1. Clone the repository
-git clone https://github.com/sowmiyan-s/guardrails-local-rag-bot.git
-cd guardrails-local-rag-bot
-
-# 2. Create & activate virtual environment
-python -m venv .venv
-
-# Windows
-.\.venv\Scripts\activate
+- `--pdf <file>`: Load a PDF document
+- `--txt <file>`: Load a text file
+- `--docx <file>`: Load a Word document
+- `--model <model>`: Specify Ollama model (default: gemma3:1b)
+- `--safety <level>`: Set safety level (public, internal, confidential, restricted)
+- `--help`: Show help
 
 # macOS / Linux
 source .venv/bin/activate
