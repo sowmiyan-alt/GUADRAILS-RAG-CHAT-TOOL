@@ -226,3 +226,4 @@ guragchat/
 ---
 
 **Made with ❤️ for privacy-conscious AI**
+make it available to pip publicly
