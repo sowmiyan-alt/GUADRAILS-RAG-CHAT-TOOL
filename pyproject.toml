@@ -9,7 +9,7 @@ description = "Privacy-first, fully offline AI document assistant secured by tie
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "Sowmiyan S", email = ""},
+    {name = "Sowmiyan S"},
 ]
 keywords = [
     "rag",
